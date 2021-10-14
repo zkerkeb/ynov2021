@@ -4,7 +4,6 @@ import { Link,useHistory } from 'react-router-dom';
 
 const Navigation = props => {
     const history = useHistory()
-    console.log("🚀 ~ file: index.js ~ line 7 ~ history", history)
     return (
         <nav>
               <Link to="/">Login</Link>
