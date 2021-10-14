@@ -9,12 +9,22 @@ import {
   import Login from '../screens/login'
   import Characters from '../screens/characters'
 import Navigation from "../components/navigation";
+import { ThemeProvider } from "styled-components";
+import {lightTheme, darkTheme} from './themes'
+import { useState } from "react";
 
 
   const Routes = () => {
+    const [currentTheme, setCurrentTheme] = useState(lightTheme)
+     const switchTheme = (theme) => {
+        setCurrentTheme(theme)
+     } 
       return(
+    <ThemeProvider theme={currentTheme}>
           <Router>
-              <Navigation/>
+              <button onClick={() =>switchTheme(lightTheme)}> light Theme</button>
+              <button onClick={() =>switchTheme(darkTheme)}> dark Theme</button>
+              {/* <Navigation/> */}
               <Switch>
                   <Route exact path="/">
                       <Login></Login>
@@ -25,6 +35,8 @@ import Navigation from "../components/navigation";
                   <Redirect  to="/"></Redirect>
               </Switch>
           </Router>
+      </ThemeProvider>
+
       )
   }
 
