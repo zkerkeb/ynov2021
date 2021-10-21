@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useHistory } from 'react-router';
 
 const Characters = props => {
+    const history = useHistory()
     const [characters, setCharacters] = useState([])
     const [limit, setLimit] = useState(20)
     const [offset, setOffset] = useState(0)
@@ -11,10 +13,33 @@ const Characters = props => {
         getCharacters(offset)
     },[offset])
 
+    useEffect(() =>{
+        const token = localStorage.getItem('token')
+        axios({
+            method: 'GET',
+            url: 'https://easy-login-api.herokuapp.com/protected',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => {
+            console.log('res', res)
+            
+            }).catch(err => {
+                localStorage.removeItem('token')
+                history.push('/')
+            }
+        
+        )
+    })
+
     useEffect(() => {
         console.log(characters)
     },[characters])
     
+    const handleClick = (id) => {
+        history.push(`/characters/${id}`)
+    }
+
 
     const  getCharacters = (offsetLocal, isReset) => {
         console.log(offsetLocal)
@@ -27,7 +52,6 @@ const Characters = props => {
                 hash : "85d6365b85a155046e158aa832440b4a",
                 offset: offsetLocal
             }}).then(res =>  {
-                console.log(res.data.data.results);
                 if(!isReset){
                 setCharacters([...characters, ...res.data.data.results])
             } else{
@@ -35,6 +59,8 @@ const Characters = props => {
             }
             }).catch(err => {
                 console.error(err);
+                // localStorage.removeItem('token')
+                // history.push('/')
             })
     }
 
@@ -76,7 +102,8 @@ const Characters = props => {
   }
 >
   {characters.map((character) => 
-  <div> <p>wesh</p>
+  <div onClick={() => handleClick(character.id)}>
+       <p>wesh</p>
       <p key={character?.id}>{character?.name}</p>
       <img style={{width: "200px"}} src={`${character?.thumbnail?.path}.${character?.thumbnail?.extension}`} ></img>
       </div>

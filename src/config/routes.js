@@ -12,6 +12,7 @@ import Navigation from "../components/navigation";
 import { ThemeProvider } from "styled-components";
 import {lightTheme, darkTheme} from './themes'
 import { useState } from "react";
+import CharacterDetails from "../screens/characterDetails";
 
 
   const Routes = () => {
@@ -29,15 +30,38 @@ import { useState } from "react";
                   <Route exact path="/">
                       <Login></Login>
                   </Route>
-                  <Route path="/characters">
+                  <PrivateRoute exact path="/characters">
                       <Characters></Characters>
-                  </Route>
+                  </PrivateRoute>
+                  <PrivateRoute path="/characters/:id">
+                      <CharacterDetails ></CharacterDetails>
+                  </PrivateRoute>
                   <Redirect  to="/"></Redirect>
               </Switch>
           </Router>
       </ThemeProvider>
 
       )
+  }
+
+  function PrivateRoute({ children, ...rest }) {
+      const isToken = localStorage.getItem('token')
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+        isToken? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/",
+                state: { from: location }
+              }}
+            />
+          )
+        }
+      />)
   }
 
   export default Routes;
