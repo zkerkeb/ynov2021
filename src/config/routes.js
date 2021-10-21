@@ -8,6 +8,7 @@ import {
   
   import Login from '../screens/login'
   import Characters from '../screens/characters'
+  import Favorites from '../screens/favorites'
 import Navigation from "../components/navigation";
 import { ThemeProvider } from "styled-components";
 import {lightTheme, darkTheme} from './themes'
@@ -35,6 +36,9 @@ import CharacterDetails from "../screens/characterDetails";
                   </PrivateRoute>
                   <PrivateRoute path="/characters/:id">
                       <CharacterDetails ></CharacterDetails>
+                  </PrivateRoute>
+                  <PrivateRoute path="/favorites">
+                      <Favorites></Favorites>
                   </PrivateRoute>
                   <Redirect  to="/"></Redirect>
               </Switch>
