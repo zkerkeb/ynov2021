@@ -9,11 +9,13 @@ import {
   import Login from '../screens/login'
   import Characters from '../screens/characters'
   import Favorites from '../screens/favorites'
+  import Style from '../screens/style'
 import Navigation from "../components/navigation";
 import { ThemeProvider } from "styled-components";
 import {lightTheme, darkTheme} from './themes'
 import { useState } from "react";
 import CharacterDetails from "../screens/characterDetails";
+import GlobalStyle from "./globalStyle";
 
 
   const Routes = () => {
@@ -23,6 +25,7 @@ import CharacterDetails from "../screens/characterDetails";
      } 
       return(
     <ThemeProvider theme={currentTheme}>
+        <GlobalStyle/>
           <Router>
               <button onClick={() =>switchTheme(lightTheme)}> light Theme</button>
               <button onClick={() =>switchTheme(darkTheme)}> dark Theme</button>
@@ -39,6 +42,9 @@ import CharacterDetails from "../screens/characterDetails";
                   </PrivateRoute>
                   <PrivateRoute path="/favorites">
                       <Favorites></Favorites>
+                  </PrivateRoute>
+                  <PrivateRoute path="/style">
+                      <Style></Style>
                   </PrivateRoute>
                   <Redirect  to="/"></Redirect>
               </Switch>

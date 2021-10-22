@@ -5,6 +5,12 @@ import StyledCounter from '../components/styledCounter';
 import Layout from '../components/layout';
 import { useHistory } from 'react-router';
 
+const fakeData = [
+    {name: 'zak', id :2, lastName : 'Kerkeb'},
+    {name: 'zak2', id :2, lastName : 'Kerkeb2'},
+    {name: 'zak3', id :2, lastName : 'Kerkeb3'}
+]
+
 const Login = props => {
     const history = useHistory();
     useEffect(() => {
@@ -27,6 +33,7 @@ const Login = props => {
             <Layout label="wai">
                 <p>ENFANT LEGITIME</p>
             </Layout>
+            {fakeData.map(data => <p>{data.name}</p>)}
             <Layout ></Layout>
         </div>
     );
