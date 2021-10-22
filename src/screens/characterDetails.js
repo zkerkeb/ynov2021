@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import Loader from '../components/loader';
 
 const CharacterDetails = () => {
     const [character, setCharacter] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
     const [favorites, setFavorites] = useState(localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [] )
     const [isFavorite, setIsfavorite] = useState(false)
     console.log("🚀 ~ file: characterDetails.js ~ line 8 ~ CharacterDetails ~ favorites", favorites)
@@ -23,6 +25,7 @@ const CharacterDetails = () => {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         axios({
             method: 'GET',
             url: `http://gateway.marvel.com/v1/public/characters/${id}`,
@@ -35,8 +38,12 @@ const CharacterDetails = () => {
             const item = response.data.data.results[0]
             console.log("🚀 ~ file: Character.js ~ line 20 ~ useEffect ~ item", item)
             setCharacter(item)
+            setIsLoading(false)
+
         }).catch(function (error) {
             console.log(error);
+            setIsLoading(false)
+
         })
     },[])
 
@@ -60,14 +67,23 @@ const CharacterDetails = () => {
         isFavorite ? removeFavorite(character.id) :  addFavorite(character) 
     }
 
+    // if(isLoading){
+    //     return <Loader></Loader>
+    // }
+
 
     return (
         <div>
+
+            <p>details</p>
+            {isLoading ?  <Loader></Loader> :
+            <>
             <p onClick={() => history.goBack()}> retour</p>
-                 <p>details</p>
                 <p>{character.name}</p>
                 <button onClick={() => {handleFavorite(character)}}>{isFavorite ?"remove from favorite" : "add to favorite"}</button>
                 <img src={`${character.thumbnail?.path}.${character.thumbnail?.extension}`}></img>
+                </>
+}
                 {/* <img src={`${character && character.thumbnail && character.thumbnail.path}.${character?.thumbnail?.extension}`}></img> */}
                 {/* <button onClick={() => window.open('')}/> */}
 
