@@ -17,9 +17,12 @@ import { useState } from "react";
 import CharacterDetails from "../screens/characterDetails";
 import GlobalStyle from "./globalStyle";
 import Evil from "../screens/evil";
-
+import { GiHamburgerMenu } from "react-icons/gi";
+import { motion } from "framer-motion"
+import styled from 'styled-components'
 
   const Routes = () => {
+    const [isOpen, setIsOpen] = useState(false)
     const [currentTheme, setCurrentTheme] = useState(lightTheme)
      const switchTheme = (theme) => {
         setCurrentTheme(theme)
@@ -28,6 +31,10 @@ import Evil from "../screens/evil";
     <ThemeProvider theme={currentTheme}>
         <GlobalStyle/>
           <Router>
+              <GiHamburgerMenu onClick={() => setIsOpen(true)} size={30} color="red"/>
+              <Menu initial="close" animate={isOpen ? "open" : "closed"} variants={menuVariants}>
+                <p onClick={() => setIsOpen(false)}> CLOSE</p>
+                </Menu>
               <button onClick={() =>switchTheme(lightTheme)}> light Theme</button>
               <button onClick={() =>switchTheme(darkTheme)}> dark Theme</button>
               {/* <Navigation/> */}
@@ -77,5 +84,18 @@ import Evil from "../screens/evil";
         }
       />)
   }
+
+const menuVariants = {
+  open: {x:0, transition: {duration:1}},
+  closed: {x:-300,transition: {duration:1}}
+}
+
+  const Menu = styled(motion.div)`
+    width: 300px;
+    height:100vh;
+    background-color: green;
+    position:fixed;
+    top:0;
+  ` 
 
   export default Routes;
