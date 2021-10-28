@@ -1,7 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components'
 import dsk from '../assets/dsk.jpeg'
+
+const evilCharacters = [
+    {name: 'Supreme King', id :0,},
+    {name: 'Lame Malveillante, Héros du mal', id :1,},
+    {name: 'Démon Malveillante, Héros du mal', id :2,},
+    {name: 'Gaia Sombre, Héros du mal', id :3,}]
+
 const Style = () => {
+    const history = useHistory()
+
+    const toEvil = (character) => {
+        history.push('/evil', {character: character})
+    }
+
     return (
         <ContainAll>
             <Header>
@@ -9,11 +23,16 @@ const Style = () => {
             <BoldParagraph>Div</BoldParagraph>
             </LeftHeader>
                 <RightHeader>
+
+
             <BoldParagraph>Div</BoldParagraph>
             <BoldParagraph>Div</BoldParagraph>
             <BoldParagraph>Div</BoldParagraph>
             </RightHeader>
             </Header>
+            <div>
+                {evilCharacters.map(evil => <p onClick={() => toEvil(evil)}>{evil.name}</p>)}
+            </div>
         <Container>
             <BoldParagraph>Div</BoldParagraph>
             <BoldParagraph>Div</BoldParagraph>

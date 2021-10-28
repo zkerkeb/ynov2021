@@ -16,6 +16,7 @@ import {lightTheme, darkTheme} from './themes'
 import { useState } from "react";
 import CharacterDetails from "../screens/characterDetails";
 import GlobalStyle from "./globalStyle";
+import Evil from "../screens/evil";
 
 
   const Routes = () => {
@@ -45,6 +46,9 @@ import GlobalStyle from "./globalStyle";
                   </PrivateRoute>
                   <PrivateRoute path="/style">
                       <Style></Style>
+                  </PrivateRoute>
+                  <PrivateRoute path="/evil">
+                      <Evil></Evil>
                   </PrivateRoute>
                   <Redirect  to="/"></Redirect>
               </Switch>
